@@ -1,5 +1,6 @@
 import re
 
+
 noNewLineRegex = re.compile('.*')
 noNewLineRegex.search('Serve the public trust.\nProtect the innocent.\nUphold the law').group()
 # Serve the public trust.
