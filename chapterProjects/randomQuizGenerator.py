@@ -35,7 +35,7 @@ for quizNum in range(35):
 # Shuffle state order
 	states = list(capitals.keys())
 	random.shuffle(states)
-# Loop through 50 states, make a question for each
+# Loop through 50 states, make a question for each for current quiz file
 	for questionNum in range(50):
 		# Get right and wrong answers
 		correctAnswer = capitals[states[questionNum]]
