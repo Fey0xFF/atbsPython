@@ -1,9 +1,9 @@
 #! python3
-# randomQuizGenerator.py - Creates quzzies with questions and answers in radom order, along with the answer key.
+# randomQuizGenerator.py - Creates a randomized quiz to choose the correct capital of each US state
 
 import random
 
-# The quiz data. Keys are states and values are their capitals.
+# Quiz data - keys are the states, the values are their capitals
 capitals = {'Alabama': 'Montgomery', 'Alaska': 'Juneau', 'Arizona': 'Phoenix',
    'Arkansas': 'Little Rock', 'California': 'Sacramento', 'Colorado': 'Denver',
    'Connecticut': 'Hartford', 'Delaware': 'Dover', 'Florida': 'Tallahassee',
@@ -21,11 +21,9 @@ capitals = {'Alabama': 'Montgomery', 'Alaska': 'Juneau', 'Arizona': 'Phoenix',
    'Nashville', 'Texas': 'Austin', 'Utah': 'Salt Lake City', 'Vermont':
    'Montpelier', 'Virginia': 'Richmond', 'Washington': 'Olympia', 'West Virginia': 
    'Charleston', 'Wisconsin': 'Madison', 'Wyoming': 'Cheyenne'}
-
- # Generate 35 quiz files
  
- # Quiz and answer key files.
- for quizNum in range(35):
+# Generate 35 random quiz and answer files
+for quizNum in range(35):
  	quizFile = open('capitalsquiz%s.txt' % (quizNum + 1), 'w')
  	answerKeyFile = open('capitalsquiz_answers%s.txt' % (quizNum + 1), 'w')
 
@@ -35,6 +33,25 @@ capitals = {'Alabama': 'Montgomery', 'Alaska': 'Juneau', 'Arizona': 'Phoenix',
  	quizFile.write('\n\n')
 
 # Shuffle state order
+	states = list(capitals.keys())
 	random.shuffle(states)
+# Loop through 50 states, make a question for each
+	for questionNum in range(50):
+		# Get right and wrong answers
+		correctAnswer = capitals[states[questionNum]]
+		wrongAnswers = list(capitals.values())
+		del wrongAnswers[wrongAnswers.index(correctAnswer)]
+		wrongAnswers = random.sample(wrongAnswers, 3)
+		answerOptions = wrongAnswers + [correctAnswer]
+		random.shuffle(answerOptions)
+		# Write to the quiz file the questions and randomized answer selection
+		quizFile.write('%s. What is the capital of %s?\n' % (questionNum + 1, states[questionNum])) 
+		for i in range(4):
+			quizFile.write(' %s. %s\n' % ('ABCD'[i], answerOptions[i]))
+		quizFile.write('\n')
+		# Write the answer key to a file
+		answerKeyFile.write('%s. %s\n' % (questionNum + 1, 'ABCD'[answerOptions.index(correctAnswer)]))
 
- 	# TODO: Loop through all 50 states, making a question for each.
+# Close the files
+quizFile.close()
+answerKeyFile.close()
